@@ -1,0 +1,150 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/vim-project/
+call project#rc("~/git")
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'derekwyatt/vim-scala'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'tpope/vim-fugitive'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'szw/vim-ctrlspace'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tyru/open-browser.vim'
+Plugin 'elzr/vim-json'
+Plugin 'xolox/vim-misc'
+Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-easytags'
+Plugin 'mhinz/vim-signify'
+Plugin 'wlangstroth/vim-racket'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'uarun/vim-protobuf'
+Plugin 'ensime/ensime-vim'
+Plugin 'amiorin/vim-project'
+Plugin 'mileszs/ack.vim'
+Plugin 'ternjs/tern_for_vim'
+Plugin 'posva/vim-vue'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-syntastic/syntastic'
+
+call vundle#end()            " required vundle
+filetype plugin indent on    " required vundle
+
+Project 'standinadminnodeweb'
+
+set ts=4
+set sw=4
+let html_use_css = 1
+set encoding=utf-8
+"set linebreak
+if has ("spell")
+        set spell
+                autocmd BufEnter *.st set nospell
+                autocmd BufLeave *.st set spell
+        hi SpellBad ctermfg=Red  ctermbg=black cterm=undercurl
+endif
+
+if has("gui_running")
+    set guifont=Inconsolata_for_Powerline:h18
+endif
+
+set hlsearch
+set list
+set lcs=tab:>-   "show tabs
+set lcs+=trail:¦ "show trailing spaces
+hi clear SpecialKey
+hi link SpecialKey NonText
+
+nmap <C-S> :bp<bar>sp<bar>bn<bar>bd<CR>
+let g:netrw_nogx = 1 " disable netrw's gx mapping. 
+nmap gx <Plug>(openbrowser-smart-search) 
+vmap gx <Plug>(openbrowser-smart-search) 
+
+set undodir=~/.vimundo
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+set backspace=indent,eol,start
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_confirm_extra_conf = 0
+set expandtab
+
+set number
+set hidden
+
+
+let g:airline_powerline_fonts = 1
+let g:airline_exclude_preview = 1
+let g:solarized_italic=0    "default value is 1
+
+if has("gui_running")
+    set background=light
+else
+    syntax on
+    set background=dark
+endif
+
+colorscheme solarized
+
+let g:vim_markdown_folding_disabled=1
+let g:vim_json_syntax_conceal=0
+
+"Easytag tag file
+let g:easytags_dynamic_files = 1
+
+" tagbar mapping
+nmap <F8> :TagbarToggle<CR>
+
+" Rainbow config
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" Vim Markdown preview
+let vim_markdown_preview_browser='Safari'
+let vim_markdown_preview_github=1
+
+" Scala config
+autocmd BufWritePost *.scala silent :EnTypeCheck
+nnoremap <localleader>t :EnTypeCheck<CR>
+au FileType scala nnoremap gd :EnDeclaration<CR>
+let ensime_server_v2=1
+let g:ycm_filetype_blacklist = {
+    \ 'scala': 1
+    \}
+
+"CtrlSpace config
+nnoremap <silent><C-p> :CtrlSpace O<CR>
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
+let g:CtrlSpaceSaveWorkspaceOnSwitch = 1
+let g:CtrlSpaceSaveWorkspaceOnExit = 1
+if executable("ack")
+    let g:CtrlSpaceGlobCommand = 'ag -l --nocolor -g ""'
+endif
+
+" Easytag
+let g:easytags_languages = {
+\   'javascript': {
+\     'cmd': '/Users/msuen/.nvm/versions/node/v6.11.5/bin/jsctags',
+\     'recurse_flag': ''
+\   }
+\}
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_vue_checkers = ['eslint']
+let g:syntastic_vue_exlint_exec = 'eslint --ext js,vue --'

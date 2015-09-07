@@ -15,6 +15,13 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tyru/open-browser.vim'
 Plugin 'elzr/vim-json'
+Plugin 'xolox/vim-misc'
+Plugin 'majutsushi/tagbar'
+Plugin 'xolox/vim-easytags'
+Plugin 'mhinz/vim-signify'
+Plugin 'wlangstroth/vim-racket'
+Plugin 'kien/rainbow_parentheses.vim'
+"Plugin 'marijnh/tern_for_vim'
 
 source $VIMRUNTIME/vimrc_example.vim
 set ts=4
@@ -36,7 +43,7 @@ endif
 set list
 set lcs=tab:>-   "show tabs
 "set shell=c:\cygwin64\Cygwin.bat
-set lcs+=trail:¦ "show trailing spaces
+set lcs+=trail:Â¦ "show trailing spaces
 "hi NonText ctermfg=red "ctermbg=lightgrey
 hi clear SpecialKey
 hi link SpecialKey NonText
@@ -55,9 +62,6 @@ set backspace=indent,eol,start
 "let g:ycm_confirm_extra_conf = 0
 set expandtab
 
-let g:netrw_sftp_cmd = "\"C:\\Bin\\psftp.exe\" -pw elco4s9f "
-let g:netrw_scp_cmd = "\"C:\\Bin\\pscp.exe\" -pw elco4s9f "
-
 set tags=c:/Project/tags,./tags
 
 let g:airline_powerline_fonts = 1
@@ -71,4 +75,14 @@ set hidden
 let g:vim_markdown_folding_disabled=1
 let g:vim_json_syntax_conceal=0
 
+"Easytag tag file
+let g:easytags_dynamic_files = 1
 
+" tagbar mapping
+nmap <F8> :TagbarToggle<CR>
+
+" Rainbow config
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
